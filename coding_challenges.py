@@ -75,7 +75,7 @@ def hourglassSum(arr):
     """Given a 6x6 2D array of numbers (a list with 6 sublists of 6 integers each) 
     print out the max sum of an hourglass shape.
 
-    An hourglass in A is a subset of values with indices falling in the following pattern of graphical representation:
+    An hourglass in an array is a subset of values with indices falling in the following pattern of graphical representation:
 
     a b c
       d
@@ -96,6 +96,30 @@ def hourglassSum(arr):
             sum.append(total)
 
     print(max(sum))
+
+
+def rotLeft(a, d):
+    """Given an array of integers A and an integer D, perform D left rotations on A and return the result.
+
+    Result should be returned as space-separated characters in one line
+
+    >>> rotLeft( [1, 2, 3, 4, 5], 4)
+    '5 1 2 3 4'
+
+    >>> rotLeft( [41, 73, 89, 7, 10, 1, 59, 58, 84, 77, 77, 97, 58, 1, 86, 58, 26, 10, 86, 51], 10)
+    '77 97 58 1 86 58 26 10 86 51 41 73 89 7 10 1 59 58 84 77'
+
+    """
+
+    for i in range(0, d):
+        a.append(a.pop(0))
+    
+    new_a = []
+    for char in a:
+        new_a.append(str(char))
+
+    return " ".join(new_a)
+        
 
 
 
