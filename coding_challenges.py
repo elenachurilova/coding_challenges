@@ -71,6 +71,31 @@ def repeatedString(s, n):
 
 
 
+def hourglassSum(arr):
+    """Given a 6x6 2D array of numbers (a list with 6 sublists of 6 integers each) 
+    print out the max sum of an hourglass shape.
+
+    An hourglass in A is a subset of values with indices falling in the following pattern of graphical representation:
+
+    a b c
+      d
+    e f g 
+
+    >>> hourglassSum([ [-9, -9, -9, 1, 1, 1], [0, -9, 0, 4, 3, 2], [-9, -9, -9, 1, 2, 3],  [0, 0, 8, 6, 6, 0], [0, 0, 0, -2, 0, 0], [0, 0, 1, 2, 4, 0 ] ])
+    28
+    """
+
+    sum = []
+
+    for i in range(0, 4): 
+
+        for j in range(0, 4): 
+
+            total = arr[i][j] + arr[i][j+1] + arr[i][j+2] + arr[i+1][j+1] + arr[i+2][j] + arr[i+2][j+1] + arr[i+2][j+2]
+
+            sum.append(total)
+
+    print(max(sum))
 
 
 
