@@ -121,6 +121,29 @@ def rotLeft(a, d):
     return " ".join(new_a)
         
 
+def count(string):
+    """Given a string, return a dictionary with keys as characters and values as count of characters
+    in the given string (int)
+
+    >>> count('aba')
+    {'a': 2, 'b': 1}
+
+    >>> count("")
+    {}
+    """
+
+    letters_count = {}
+    
+    if string == "":
+        return {}
+    else:
+        for char in string:
+            if char in letters_count:
+                letters_count[char] += 1
+            else:
+                letters_count[char] = 1
+                
+    return letters_count
 
 
 if __name__ == '__main__':
