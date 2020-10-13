@@ -146,6 +146,67 @@ def count(string):
     return letters_count
 
 
+def pig_it(text):
+    """Given a string move the first letter of each word to the end of it, 
+    then add "ay" to the end of the word. Leave punctuation marks untouched.
+
+    >>> pig_it('Quis custodiet ipsos custodes ?')
+    'uisQay ustodietcay psosiay ustodescay ?'
+    """
+    
+    original_words = text.split()
+    pig_words = []
+    
+    for word in original_words:
+        
+        if word in '!@#$%^&*()?.,':
+            pig_words.append(word)
+        else:
+            first_letter = word[0]
+            sliced = word[1:]
+            
+            new_word = sliced + first_letter + 'ay'
+            pig_words.append(new_word)
+
+    pig_phrase = " ".join(pig_words)
+    return pig_phrase
+
+
+def pick_peaks(arr):
+    """Given an array of integers, return the positions and the values of the 
+    "peaks" (or local maxima) in the following format {pos: [], peaks: []}
+
+    >>> pick_peaks([1,2,3,6,4,1,2,3,2,1])
+    {'pos': [3, 7], 'peaks': [6, 3]}
+
+    >>> pick_peaks([1,2,5,4,3,2,3,6,4,1,2,3,3,4,5,3,2,1,2,3,5,5,4,3])
+    {'pos': [2, 7, 14, 20], 'peaks': [5, 6, 5, 5]}
+    """
+    
+    result = {"pos": [], "peaks": []}
+    
+    for i in range(1, len(arr)-1):
+        
+        if arr[i] > arr[i-1] and arr[i] > arr[i+1]:
+            
+            result["pos"].append(i)
+            result["peaks"].append(arr[i])
+            
+        elif arr[i] > arr[i-1] and arr[i] >= arr[i+1]:
+                
+                for j in range(i, len(arr)):
+                    
+                    if arr[i] != arr[j]:
+                        if arr[i] < arr[j]:
+                            break
+                        elif arr[i] > arr[j]:
+                            result["pos"].append(i)
+                            result["peaks"].append(arr[i])
+                            break 
+                        
+    return result
+        
+
 if __name__ == '__main__':
     import doctest
     if doctest.testmod().failed == 0:
