@@ -205,9 +205,76 @@ def pick_peaks(arr):
                             break 
                         
     return result
+
+
+
         
+# * # * # * Linked list implementation * # * # * #
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+    def __repr__(self):
+        return(f'Node {self.data}')
+
+class LinkedList:
+    def __init__(self, nodes=None):
+        """Initiate a LinkedList object"""
+        self.head = None
+        if nodes is not None:
+            node = Node(data=nodes.pop(0))
+            self.head = node
+            for elem in nodes:
+                node.next = Node(data=elem)
+                node = node.next
+
+    def __repr__(self):
+        """Pretty print an instance"""
+        node = self.head
+        nodes = []
+        while node is not None:
+            nodes.append(node.data)
+            node = node.next
+        nodes.append("None")
+        return " -> ".join(nodes)
+
+    def __iter__(self):
+        """Traverse over the instance"""
+        node = self.head
+        while node.next is not None:
+            yield node
+            node = node.next
+
+    def add_beginning(self, node):
+        """Add a new Node to the beginning of the LinkedList"""
+        node.next = self.head
+        self.head = node
+
+    def add_end(self, node):
+        """Add a new Node to the end of the LinkedList"""
+        if not self.head:
+            self.head = node
+            return
+        for current_node in self:
+            pass
+        current_node.next.next = node
+        
+            
+
 
 if __name__ == '__main__':
     import doctest
     if doctest.testmod().failed == 0:
         print('\n✨ ALL TESTS PASSED!\n')
+
+    llist = LinkedList()
+    node1 = Node("orange")
+    node2 = Node("banana")
+    node3 = Node("grape")
+    node4 = Node("strawberry")
+    llist.head = node1
+    node1.next = node2
+    node2.next = node3
+    node3.next = node4
