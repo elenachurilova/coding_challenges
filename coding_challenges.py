@@ -262,6 +262,34 @@ class LinkedList:
         current_node.next.next = node
         
             
+def to_camel_case(text):
+    """Given a string convert it to camel case.
+    
+    The first word within the output should be capitalized only if the original word was capitalized 
+    (known as Upper Camel Case or Pascal case)
+
+    >>> to_camel_case('the_stealth_warrior') 
+    'theStealthWarrior'
+
+    >>> to_camel_case('The-Stealth-Warrior') 
+    'TheStealthWarrior'
+
+    >>> to_camel_case('A-B-C')
+    'ABC'
+
+    """
+    new_string = []
+    
+    for i in range(0, len(text)):
+        
+        if text[i] == "-" or text[i] == "_":
+            continue
+        elif i > 0 and text[i-1] == "-" or text[i-1] == "_":
+            new_string.append(text[i].upper())
+        else:
+            new_string.append(text[i])
+        
+    return "".join(new_string)
 
 
 if __name__ == '__main__':
@@ -278,3 +306,5 @@ if __name__ == '__main__':
     node1.next = node2
     node2.next = node3
     node3.next = node4
+
+
