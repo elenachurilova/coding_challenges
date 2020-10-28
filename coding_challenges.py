@@ -292,6 +292,39 @@ def to_camel_case(text):
     return "".join(new_string)
 
 
+def checkMagazine(magazine, note):
+    """
+    >>> checkMagazine(["give", "me", "one", "grand", "today", "night"], ["give", "one", "grand", "today"])
+    Yes
+
+    """
+
+    answer = ''
+    dictionary = {}
+
+    for word in magazine:
+
+        if word in dictionary:
+            dictionary[word] += 1
+        else:
+            dictionary[word] = 1
+
+    for word in note:
+
+        if word in dictionary:
+            if dictionary[word] > 0:
+                dictionary[word] -= 1
+                answer = "Yes"
+            else:
+                answer = "No"
+                break
+        else:
+            answer = "No"
+            break
+
+    print(answer)
+
+
 if __name__ == '__main__':
     import doctest
     if doctest.testmod().failed == 0:
