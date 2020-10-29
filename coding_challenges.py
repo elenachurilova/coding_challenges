@@ -325,6 +325,42 @@ def checkMagazine(magazine, note):
     print(answer)
 
 
+# * # * # * Class implementation * # * # * #
+
+class Door:
+
+    def __init__(self, height, color, is_locked):
+        self.height = height
+        self.color = color
+        self.is_locked = is_locked
+
+    def __repr__(self):
+        return f'<Door of {self.color} color, {self.height} inches high>'
+
+    def open_it(self):
+        
+        if self.is_locked == True:
+            print("The door must be unlocked first")
+            self.open = False
+        else:
+            print("The door is open now...")
+            self.open = True
+
+    def close_it(self):
+        pass
+
+    def toggle_lock(self):
+        if self.is_locked == False:
+            self.is_locked = True
+            print("Success! The door is locked now")
+        else:
+            self.is_locked = False
+            print("Careful! The door is unlocked now")
+
+
+    
+
+
 if __name__ == '__main__':
     import doctest
     if doctest.testmod().failed == 0:
