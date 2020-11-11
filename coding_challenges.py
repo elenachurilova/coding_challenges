@@ -358,7 +358,179 @@ class Door:
             print("Careful! The door is unlocked now")
 
 
+def howMany(sentence):
+    """Given a sentense made up of groups of words determine the number of words
+
+    Each word is a sequence of letters (a-z, A-Z) that may contain one or more hyphens and may
+    end in a punctuation mark: period, comma, question mark or exclamation point. Words will be separated
+    by one or more white space characters, hyphens join two words into one and should be retained while the other
+    punctuation marks should be stripped. 
+
+    >>> howMany("How many eggs are in half-dozen, 13?")
+    6
+
+    """
+    s=sentence
+    list_of_words = s.split()
+    result = []
     
+    for word in list_of_words:
+        # if word contains not only alphabetical chars
+        if not word.isalpha():
+            # if 1st-thru-second-to-last-chars are all letters
+            if word[0:-1].isalpha():
+                # if the last item is an allowed punctuation mark
+                if word[-1] in "!?.,":
+                    # keep the word
+                    result.append(word)
+            elif "-" in word:
+                # if characters wrapping the "-" are all alphabetical and/or the last char is an allowed punctuation mark
+                if word[0:(word.index("-"))].isalpha() and word[(word.index("-"))+1:].isalpha() or word[0:(word.index("-"))].isalpha() and word[(word.index("-"))+1:-1].isalpha() and word[-1] in "!?.,":
+                    result.append(word)
+            else:
+                continue
+        else:
+            result.append(word)
+                             
+    return len(result)
+
+def nums_to_target(candidates, target):
+    # [2, 3, 5], target = 8
+    # result = [ [2, 2, 2, 2], [2, 3, 3], [3, 5]]
+
+    result = []
+
+    for candidate in candidates:
+        if target % candidate == 0:
+            coeff = int(target / candidate)
+            temp = [candidate] * coeff
+            result.append(temp)
+
+    start = candidates[0]
+    for num in range(1, len(candidates)):
+        if start + candidates[num] == target:
+            result.append([start, candidates[num]])
+            start = candidates[candidates.index(start)+1]
+
+##################################
+
+class Employee():
+    """A node in a graph representing a restaurant"""
+
+    def __init__(self, position, connections=None):
+
+        if connections is None:
+            connections = set()
+
+        self.position = position
+        self.connections = connections
+
+    def __repr__(self):
+        return f"<Employee node {self.position}>"
+
+    def add_connection(self, connection):
+        self.connections.add(connection)
+
+
+class Restaurant():
+    """A graph holding employees and their connections in the restaurant flow"""
+
+    def __init__(self):
+        """Create an empty graph"""
+        self.employees = set()
+
+    def __repr__(self):
+        """Print instance for easy debugging"""
+        return f"<Restaurant graph: {employee for employee in self.employees}>"
+
+    def add_person(self, person):
+        """Add a new instance to the graph"""
+        self.employees.add(person)
+
+    def set_connection(self, employee1, employee2):
+        """Set new connection between two employees"""
+        employee1.add_connection(employee2)
+        employee2.add_connection(employee1)
+        
+    def add_employees(self, employees_list):
+        """Add employees to the restaurant"""
+        for person in employees_list:
+            self.add_person(person)
+
+    def are_connected(self, employee1, employee2):
+        """Are two employees connected? BFS"""
+
+        seen = set()
+        queue = []
+        queue.append(employee1)
+        seen.add(employee1)
+       
+        while queue:
+            current_employee = queue.pop(0)
+            print("checking ", current_employee)
+            
+            if current_employee is employee2:
+                return True
+            else:
+                for person in current_employee.connections - seen:
+                    queue.append(person)
+                    seen.add(person)
+                    print("added to queue: ", person)
+        return False
+
+    def are_connected_recursively(self, employee1, employee2, seen=None):
+        """Are two employees connected? DFS using recursion"""
+
+        if not seen:
+            seen = set()
+
+        # base case
+        if employee1 is employee2:
+            return True
+
+        seen.add(employee1)
+        print("adding", employee1)
+
+        for employee in employee1.connections:
+
+            if employee not in seen:
+
+                if self.are_connected_recursively(employee, employee2, seen):
+                    return True
+
+        return False
+
+
+    def shortest_path(self, employee1, employee2):
+        """Calculate distance (minimal distance) between two employees in a restaurant"""
+
+        seen = []
+        queue = [[employee1]]
+
+        if employee1 == employee2:
+            print("That was easy!")
+            return 0
+        
+        while queue:
+            path = queue.pop(0)
+            node = path[-1]
+            if node not in seen:
+                connections = node.connections
+
+                for connection in connections:
+                    new_path = list(path)
+                    new_path.append(connection)
+                    queue.append(new_path)
+
+                    if connection == employee2:
+                        print(f"Shortest path is: {new_path}")
+                        return (len(new_path)-1)
+                
+                seen.append(node)
+
+        return "Two employees are independent. The connection doesn't exist"
+
+
 
 
 if __name__ == '__main__':
@@ -377,3 +549,14 @@ if __name__ == '__main__':
     node3.next = node4
 
 
+    hostess = Employee("hostess")
+    waiter = Employee("waiter")
+    chef = Employee("chef")
+    bus_boy = Employee("bus_boy")
+    hostess.add_connection(waiter)
+    waiter.add_connection(bus_boy)
+    waiter.add_connection(chef)
+    chef.add_connection(waiter)
+    bus_boy.add_connection(chef)
+    sapore = Restaurant()
+    sapore.add_employees([hostess, waiter, chef, bus_boy])
