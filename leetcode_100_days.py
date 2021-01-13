@@ -28,6 +28,34 @@ def smallest_window_to_sort(array):
 
 # 1640. Check Array Formation Through Concatenation
 
+# Input: arr = [85], pieces = [[85]]
+# Output: true
+
+# Input: arr = [15,88], pieces = [[88],[15]]
+# Output: true
+# Explanation: Concatenate [15] then [88]
+
+# Input: arr = [49,18,16], pieces = [[16,18,49]]
+# Output: false
+# Explanation: Even though the numbers match, we cannot reorder pieces[0].
+
+# Input: arr = [91,4,64,78], pieces = [[78],[4,64],[91]]
+# Output: true
+# Explanation: Concatenate [91] then [4,64] then [78]
+
+# Input: arr = [1,3,5,7], pieces = [[2,4,6,8]]
+# Output: false
+
+class Solution:
+    def canFormArray(self, arr: List[int], pieces: List[List[int]]) -> bool:
+        
+        mapped = { piece[0] : piece for piece in pieces }
+        result = []
+            
+        for item in arr:
+            result += mapped.get(item, [])
+                
+        return result == arr
 
 
 
