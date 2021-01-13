@@ -530,7 +530,55 @@ class Restaurant():
 
         return "Two employees are independent. The connection doesn't exist"
 
+############################################
 
+def loop_size(node):
+    """Codewars "Can you get the loop" kata
+    
+    Given a node that is a beginning of a Linked List that always contained a tail and a loop, 
+    determine the length of a loop
+
+
+    0 --> 0 --> 0 
+    ^           !
+    0           0
+    ^           !   
+    0 <-- 0 <-- 0 <-- 0 <-- 0 <-- 0 
+
+    for example in the following representation the tail is 3 and the loop is 8
+    can use node.next method
+    """
+
+    
+    visited = []
+    seen = set()
+    seen.add(node)
+    current_node = node
+    
+    while current_node.next is not None:
+        
+        visited.append(current_node)
+        seen.add(current_node)
+        
+        if current_node.next in seen:
+            
+            start = current_node.next
+            finish = current_node
+            return len(visited[visited.index(start):visited.index(finish)])+1
+        
+        
+        current_node = current_node.next
+
+
+def print_pairs(list1):
+
+    i = 0
+    j = i+1
+
+    while i < len(list1):
+        while j < len(list1):
+            print(list1[i], list1[j])
+            i += 1
 
 
 if __name__ == '__main__':
